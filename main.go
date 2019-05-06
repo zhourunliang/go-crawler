@@ -7,6 +7,8 @@ import (
     "time"
     "os"
     // "strconv"
+    "github.com/PuerkitoBio/goquery"
+    "log"
 )
 //定义新的数据类型
 type Spider struct {
@@ -77,9 +79,20 @@ func parse()  {
     }
 }
 
+func goqueryParse()  {
+    doc, err := goquery.NewDocument("http://zhourunliang.github.io")
+    if err != nil {
+        log.Fatal(err)
+    }
+    fmt.Println(doc.Html())            //.Html()得到html内容
+    title := doc.Find(".article-title").Text()
+}
+
+
 func main() {
     t1 := time.Now() // get current time
-    parse()
+    // parse()
+    goqueryParse()
     elapsed := time.Since(t1)
     fmt.Println("爬虫结束,总共耗时: ", elapsed)
 
